@@ -14,8 +14,10 @@ void get_column(char* line, char** column, int columnNum) {
         if (!strncmp(line, "\t", 1)) {
             colCount++;
             if (colCount == columnNum) {
-                tabBefore = i;
-                lineStart = line + 1;
+                if (columnNum != 0) {
+                    tabBefore = i;
+                    lineStart = line + 1;
+                }
             } else if (colCount == columnNum + 1) {
                 tabAfter = i;
                 break;
@@ -26,7 +28,7 @@ void get_column(char* line, char** column, int columnNum) {
         line++;
     }
 
-    *column = malloc(tabAfter - tabBefore);
-    strncpy(*column, lineStart, tabAfter - tabBefore - 1);
-    (*column)[tabAfter - tabBefore - 1] = '\0';
+    *column = malloc(tabAfter - tabBefore + 1);
+    strncpy(*column, lineStart, tabAfter - tabBefore);
+    (*column)[tabAfter - tabBefore] = '\0';
 }

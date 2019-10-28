@@ -6,15 +6,18 @@
 
 struct name_basics* get_name(char* path) {
     FILE* fp;
+    struct name_basics* names;
     char* column;
     char* line = malloc(sizeof(char) * 1024);
     char* dir = malloc(strlen(path) + strlen("/name.basics.tsv") + 1);
     int actorCount = 0;
+    int i = 0;
+
     strcpy(dir, path);
     strcat(dir, "/name.basics.tsv");
 
     fp = fopen(dir, "r");
-    while(!feof(fp)) {
+    while (!feof(fp)) {
         fgets(line, 1024, fp);
         get_column(line, &column, 4);
         if (strstr(column, "actor") || strstr(column, "actress")) {
@@ -23,9 +26,25 @@ struct name_basics* get_name(char* path) {
         free(column);
     }
     printf("# of actors: %d\n", actorCount);
+    names = malloc(sizeof(struct name_basics) * actorCount);
+    fseek(fp, 0, SEEK_SET);
+
+    /* ignore column titles */
+    fgets(line, 1024, fp);
+    while (!feof(fp)) {
+        fgets(line, 1024, fp);
+        get_column(line, &column, 4);
+        if (strstr(column, "actor") || strstr(column, "actress")) {
+            get_column(line, &(names[i].nconst), 0);
+            get_column(line, &(names[i].primaryName), 1);
+            i++;
+        }
+        free(column);
+    }
+
     fclose(fp);
     free(line);
     free(dir);
-    return NULL;
+    return names;
 }
 
