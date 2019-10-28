@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <common.h>
+#include "title.h"
+
+struct title_basics* get_title(char* path) {
+    FILE* fp;
+    struct title_basics* titles;
+    char* column;
+    char* line = malloc(sizeof(char) * 1024);
+    char* dir = malloc(strlen(path) + strlen("/title.basics.tsv") + 1);
+    int movieCount = 0;
+    int i = 0;
+
+    strcpy(dir, path);
+    strcat(dir, "/title.basics.tsv");
+    printf("Opening: %s\n", dir);
+
+    fp = fopen(dir, "r");
+    while (!feof(fp)) {
+        fgets(line, 1024, fp);
+        get_column(line, &column, 1);
+        if (!strncmp(column, "movie", 5)) {
+            free(column);
+            get_column(line, &column, 4);
+            if (!strncmp(column, "0", 1)) {
+                movieCount++;
+            }
+            free(column);
+        }
+        else {
+            free(column);
+        }
+    }
+
+    printf("number of titles: %d\n", movieCount);
+    titles = malloc(sizeof(struct title_basics) * movieCount);
+    fseek(fp, 0, SEEK_SET);
+
+    /* ignore column titles */
+    fgets(line, 1024, fp);
+    while (!feof(fp)) {
+        fgets(line, 1024, fp);
+        get_column(line, &column, 1);
+        if (!strncmp(column, "movie", 5)) {
+            free(column);
+            get_column(line, &column, 4);
+            if (!strncmp(column, "0", 1)) {
+                get_column(line, &(titles[i].tconst), 0);
+                get_column(line, &(titles[i].primaryTitle), 2);
+                i++;
+            }
+            free(column);
+        }
+        else {
+            free(column);
+        }
+    }
+
+    fclose(fp);
+    free(line);
+    free(dir);
+    return titles;
+}

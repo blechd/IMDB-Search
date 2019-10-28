@@ -7,19 +7,19 @@
 
 int main(int argc, char* argv[]) {
     int i;
-    struct name_basics* names;
+    struct title_principals* principals;
 
     if (argc != 2) {
         fprintf(stderr, "Usage: %s directory\n", argv[0]);
         return -1;
     }
 
-    names = get_name(argv[1]);
+    principals = get_principals(argv[1]);
     for (i = 0; i < 10; i++) {
-        printf("element %d: %s %s\n", i + 1, names[i].nconst, names[i].primaryName);
+        printf("element %d: %s %s %s\n", i + 1, principals[i].tconst, principals[i].nconst, principals[i].characters);
     }
-    for (i = 10000; i < 10010; i++) {
-        printf("element %d: %s %s\n", i + 1, names[i].nconst, names[i].primaryName);
+    for (i = 14648773; i < 14648783; i++) {
+        printf("element %d: %s %s %s\n", i + 1, principals[i].tconst, principals[i].nconst, principals[i].characters);
     }
 
     return 0;

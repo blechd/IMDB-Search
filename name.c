@@ -15,6 +15,7 @@ struct name_basics* get_name(char* path) {
 
     strcpy(dir, path);
     strcat(dir, "/name.basics.tsv");
+    printf("Opening: %s\n", dir);
 
     fp = fopen(dir, "r");
     while (!feof(fp)) {
