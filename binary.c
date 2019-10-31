@@ -45,11 +45,21 @@ void* find_node(struct tree_node* root, char* key) {
 void build_tindex(struct array_struct* arrayStruct) {
     int i;
     for (i = 0; i < arrayStruct->arrlen; i++) {
-        /* TODO fix this godforsaken mess */
         add_node(&(arrayStruct->tree1), ((struct title_basics*)(arrayStruct->array))[i].primaryTitle, &(((struct title_basics*)(arrayStruct->array))[i]));
     }
 }
 
 struct title_basics* find_primary_title(struct array_struct* arrayStruct, char* title) {
     return (struct title_basics*)find_node(arrayStruct->tree1, title);
+}
+
+void build_nindex(struct array_struct* arrayStruct) {
+    int i;
+    for (i = 0; i < arrayStruct->arrlen; i++) {
+        add_node(&(arrayStruct->tree1), ((struct name_basics*)(arrayStruct->array))[i].primaryName, &(((struct name_basics*)(arrayStruct->array))[i]));
+    }
+}
+
+struct name_basics* find_primary_name(struct array_struct* arrayStruct, char* name) {
+    return (struct name_basics*)find_node(arrayStruct->tree1, name);
 }

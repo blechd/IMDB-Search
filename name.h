@@ -4,3 +4,4 @@ struct name_basics {
 };
 
 struct array_struct* get_name(char*);
+struct name_basics* find_primary_name(struct array_struct*, char*);

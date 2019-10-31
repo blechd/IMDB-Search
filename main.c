@@ -6,29 +6,34 @@
 #include "principals.h"
 
 int main(int argc, char* argv[]) {
-    struct array_struct* titles;
-    struct title_basics* found;
+    struct array_struct* names;
+    struct name_basics* found;
 
     if (argc != 2) {
         fprintf(stderr, "Usage: %s directory\n", argv[0]);
         return -1;
     }
 
-    titles = get_title(argv[1]);
-    build_tindex(titles);
-    found = find_primary_title(titles, "Star Wars: Episode V - The Empire Strikes Back");
+    names = get_name(argv[1]);
+    build_nindex(names);
+    found = find_primary_name(names, "Anthony Daniels");
 
-    printf("found:\n");
-    printf("%p\n", (void*)found);
-    printf("%s\n", found->tconst);
-    printf("%s\n", found->primaryTitle);
+    if (found) {
+        printf("found:\n");
+        printf("%p\n", (void *) found);
+        printf("%s\n", found->nconst);
+        printf("%s\n", found->primaryName);
+    }
+    else {
+        printf("not found\n");
+    }
 
     printf("\nfirst node:\n");
-    printf("%p\n", (void*)(titles->tree1));
-    printf("%s\n", (titles->tree1)->key);
-    printf("%p\n", (void*)(titles->tree1)->data);
-    printf("%s\n", ((struct title_basics*)(titles->tree1)->data)->primaryTitle);
-    printf("%s\n", ((struct title_basics*)(titles->tree1)->data)->tconst);
+    printf("%p\n", (void*)(names->tree1));
+    printf("%s\n", (names->tree1)->key);
+    printf("%p\n", (void*)(names->tree1)->data);
+    printf("%s\n", ((struct name_basics*)(names->tree1)->data)->primaryName);
+    printf("%s\n", ((struct name_basics*)(names->tree1)->data)->nconst);
 
     return 0;
 }
