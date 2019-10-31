@@ -6,21 +6,29 @@
 #include "principals.h"
 
 int main(int argc, char* argv[]) {
-    int i;
-    struct title_principals* principals;
+    struct array_struct* titles;
+    struct title_basics* found;
 
     if (argc != 2) {
         fprintf(stderr, "Usage: %s directory\n", argv[0]);
         return -1;
     }
 
-    principals = get_principals(argv[1]);
-    for (i = 0; i < 10; i++) {
-        printf("element %d: %s %s %s\n", i + 1, principals[i].tconst, principals[i].nconst, principals[i].characters);
-    }
-    for (i = 14648773; i < 14648783; i++) {
-        printf("element %d: %s %s %s\n", i + 1, principals[i].tconst, principals[i].nconst, principals[i].characters);
-    }
+    titles = get_title(argv[1]);
+    build_tindex(titles);
+    found = find_primary_title(titles, "Star Wars: Episode V - The Empire Strikes Back");
+
+    printf("found:\n");
+    printf("%p\n", (void*)found);
+    printf("%s\n", found->tconst);
+    printf("%s\n", found->primaryTitle);
+
+    printf("\nfirst node:\n");
+    printf("%p\n", (void*)(titles->tree1));
+    printf("%s\n", (titles->tree1)->key);
+    printf("%p\n", (void*)(titles->tree1)->data);
+    printf("%s\n", ((struct title_basics*)(titles->tree1)->data)->primaryTitle);
+    printf("%s\n", ((struct title_basics*)(titles->tree1)->data)->tconst);
 
     return 0;
 }

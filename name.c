@@ -4,9 +4,10 @@
 #include "name.h"
 #include "common.h"
 
-struct name_basics* get_name(char* path) {
+struct array_struct* get_name(char* path) {
     FILE* fp;
     struct name_basics* names;
+    struct array_struct* arrayStruct = malloc(sizeof(struct array_struct));
     char* column;
     char* line = malloc(sizeof(char) * 1024);
     char* dir = malloc(strlen(path) + strlen("/name.basics.tsv") + 1);
@@ -46,6 +47,11 @@ struct name_basics* get_name(char* path) {
     fclose(fp);
     free(line);
     free(dir);
-    return names;
+
+    arrayStruct->arrlen = actorCount;
+    arrayStruct->array = names;
+    arrayStruct->tree1 = NULL;
+    arrayStruct->tree2 = NULL;
+    return arrayStruct;
 }
 

@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <common.h>
+#include "common.h"
 #include "principals.h"
 
-struct title_principals* get_principals(char* path) {
+struct array_struct* get_principals(char* path) {
     FILE* fp;
     struct title_principals* principals;
+    struct array_struct* arrayStruct = malloc(sizeof(struct array_struct));
     char* column;
     char* line = malloc(sizeof(char) * 1024);
     char* dir = malloc(strlen(path) + strlen("/title.principals.tsv") + 1);
@@ -48,5 +49,10 @@ struct title_principals* get_principals(char* path) {
     fclose(fp);
     free(line);
     free(dir);
-    return principals;
+
+    arrayStruct->arrlen = principalCount;
+    arrayStruct->array = principals;
+    arrayStruct->tree1 = NULL;
+    arrayStruct->tree2 = NULL;
+    return arrayStruct;
 }

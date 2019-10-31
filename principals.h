@@ -4,4 +4,4 @@ struct title_principals {
     char* characters;
 };
 
-struct title_principals* get_principals(char*);
+struct array_struct* get_principals(char*);

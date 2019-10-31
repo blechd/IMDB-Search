@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <common.h>
+#include "common.h"
 #include "title.h"
 
-struct title_basics* get_title(char* path) {
+struct array_struct* get_title(char* path) {
     FILE* fp;
     struct title_basics* titles;
+    struct array_struct* arrayStruct = malloc(sizeof(struct array_struct));
     char* column;
     char* line = malloc(sizeof(char) * 1024);
     char* dir = malloc(strlen(path) + strlen("/title.basics.tsv") + 1);
@@ -61,5 +62,10 @@ struct title_basics* get_title(char* path) {
     fclose(fp);
     free(line);
     free(dir);
-    return titles;
+
+    arrayStruct->arrlen = movieCount;
+    arrayStruct->array = titles;
+    arrayStruct->tree1 = NULL;
+    arrayStruct->tree2 = NULL;
+    return arrayStruct;
 }
