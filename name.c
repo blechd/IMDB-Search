@@ -38,6 +38,7 @@ struct array_struct* get_name(char* path) {
         get_column(line, &column, 4);
         if (strstr(column, "actor") || strstr(column, "actress")) {
             get_column(line, &(names[i].nconst), 0);
+            reverse_string(names[i].nconst);
             get_column(line, &(names[i].primaryName), 1);
             i++;
         }

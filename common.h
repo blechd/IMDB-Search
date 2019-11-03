@@ -6,3 +6,4 @@ struct array_struct {
 };
 
 void get_column(char*, char**, int);
+void reverse_string(char*);

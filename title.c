@@ -49,6 +49,7 @@ struct array_struct* get_title(char* path) {
             get_column(line, &column, 4);
             if (!strncmp(column, "0", 1)) {
                 get_column(line, &(titles[i].tconst), 0);
+                reverse_string(titles[i].tconst);
                 get_column(line, &(titles[i].primaryTitle), 2);
                 i++;
             }

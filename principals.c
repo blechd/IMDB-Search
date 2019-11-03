@@ -39,7 +39,9 @@ struct array_struct* get_principals(char* path) {
         get_column(line, &column, 3);
         if (!strncmp(column, "actor", 5) || !strncmp(column, "actress", 7)) {
             get_column(line, &(principals[i].tconst), 0);
+            reverse_string(principals[i].tconst);
             get_column(line, &(principals[i].nconst), 2);
+            reverse_string(principals[i].nconst);
             get_column(line, &(principals[i].characters), 5);
             i++;
         }
