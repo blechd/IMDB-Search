@@ -1,3 +1,8 @@
+/* Andy Li
+ * 1048672
+ * ali13@uoguelph.ca
+ */
+
 struct name_basics {
     char* nconst;
     char* primaryName;

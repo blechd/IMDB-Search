@@ -1,3 +1,8 @@
+/* Andy Li
+ * 1048672
+ * ali13@uoguelph.ca
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,20 +30,28 @@ void add_node(struct tree_node** root, char* key, void* structAddress) {
     }
 }
 
-void* find_node(struct tree_node* root, char* key) {
+struct tree_node* find_node(struct tree_node* root, char* key) {
     if (root) {
-        if (strcmp(root->key, key) < 0) {
+        if (!strcmp(root->key, key)) {
+            return root;
+        }
+        else if (strcmp(root->key, key) < 0) {
             return find_node(root->children[0], key);
         }
-        else if (strcmp(root->key, key) > 0) {
+        else { /* strcmp(root->key, key) > 0 */
             return find_node(root->children[1], key);
-        }
-        else {
-            return root->data;
         }
     }
     else {
         return NULL;
+    }
+}
+
+void free_tree(struct tree_node* root) {
+    if (root) {
+        free_tree(root->children[0]);
+        free_tree(root->children[1]);
+        free(root);
     }
 }
 
@@ -61,11 +74,15 @@ void build_ptindex(struct array_struct* arrayStruct) {
 }
 
 struct title_basics* find_primary_title(struct array_struct* arrayStruct, char* title) {
-    return (struct title_basics*)find_node(arrayStruct->tree2, title);
+    struct tree_node* found = find_node(arrayStruct->tree2, title);
+    if (!found) return NULL;
+    return (struct title_basics*)(found->data);
 }
 
 struct title_basics* find_tconst(struct array_struct* arrayStruct, char* tconst) {
-    return (struct title_basics*)find_node(arrayStruct->tree1, tconst);
+    struct tree_node* found = find_node(arrayStruct->tree1, tconst);
+    if (!found) return NULL;
+    return (struct title_basics*)(found->data);
 }
 
 void build_nindex(struct array_struct* arrayStruct) {
@@ -87,11 +104,15 @@ void build_pnindex(struct array_struct* arrayStruct) {
 }
 
 struct name_basics* find_primary_name(struct array_struct* arrayStruct, char* name) {
-    return (struct name_basics*)find_node(arrayStruct->tree2, name);
+    struct tree_node* found = find_node(arrayStruct->tree2, name);
+    if (!found) return NULL;
+    return (struct name_basics*)(found->data);
 }
 
 struct name_basics* find_nconst(struct array_struct* arrayStruct, char* nconst) {
-    return (struct name_basics*)find_node(arrayStruct->tree1, nconst);
+    struct tree_node* found = find_node(arrayStruct->tree1, nconst);
+    if (!found) return NULL;
+    return (struct name_basics*)(found->data);
 }
 
 void build_tindex_tp(struct array_struct* arrayStruct) {
@@ -112,10 +133,10 @@ void build_nindex_tp(struct array_struct* arrayStruct) {
     }
 }
 
-struct title_principals* find_tconst_tp(struct array_struct* arrayStruct, char* tconst) {
-    return (struct title_principals*)find_node(arrayStruct->tree1, tconst);
+struct tree_node* find_tconst_tp(struct array_struct* arrayStruct, char* tconst) {
+    return find_node(arrayStruct->tree1, tconst);
 }
 
-struct title_principals* find_nconst_tp(struct array_struct* arrayStruct, char* nconst) {
-    return (struct title_principals*)find_node(arrayStruct->tree2, nconst);
+struct tree_node* find_nconst_tp(struct array_struct* arrayStruct, char* nconst) {
+    return find_node(arrayStruct->tree2, nconst);
 }

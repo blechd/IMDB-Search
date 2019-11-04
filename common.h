@@ -1,3 +1,8 @@
+/* Andy Li
+ * 1048672
+ * ali13@uoguelph.ca
+ */
+
 struct array_struct {
     int arrlen;
     void* array;
@@ -7,3 +12,4 @@ struct array_struct {
 
 void get_column(char*, char**, int);
 void reverse_string(char*);
+void fileNotFound(char*);

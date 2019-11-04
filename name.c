@@ -1,3 +1,8 @@
+/* Andy Li
+ * 1048672
+ * ali13@uoguelph.ca
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,9 +21,11 @@ struct array_struct* get_name(char* path) {
 
     strcpy(dir, path);
     strcat(dir, "/name.basics.tsv");
-    printf("Opening: %s\n", dir);
 
     fp = fopen(dir, "r");
+    if (!fp) {
+        fileNotFound(dir);
+    }
     while (!feof(fp)) {
         fgets(line, 1024, fp);
         get_column(line, &column, 4);
@@ -27,7 +34,6 @@ struct array_struct* get_name(char* path) {
         }
         free(column);
     }
-    printf("# of actors: %d\n", actorCount);
     names = malloc(sizeof(struct name_basics) * actorCount);
     fseek(fp, 0, SEEK_SET);
 

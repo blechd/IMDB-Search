@@ -1,3 +1,8 @@
+/* Andy Li
+ * 1048672
+ * ali13@uoguelph.ca
+ */
+
 struct title_basics {
     char* tconst;
     char* primaryTitle;

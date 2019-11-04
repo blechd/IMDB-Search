@@ -1,3 +1,8 @@
+/* Andy Li
+ * 1048672
+ * ali13@uoguelph.ca
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -8,6 +13,7 @@ void get_column(char* line, char** column, int columnNum) {
     int colCount = 0;
     int tabBefore = 0, tabAfter = 0;
     char* lineStart = line;
+    line[strlen(line)] = 0;
 
     while (1) {
         if (!strncmp(line, "\t", 1)) {
@@ -42,4 +48,9 @@ void reverse_string(char* string) {
         string[start] = string[end];
         string[end] = temp;
     } while (start++ < end--);
+}
+
+void fileNotFound(char* path) {
+    fprintf(stderr, "Error: could not open file %s\n", path);
+    exit(-1);
 }

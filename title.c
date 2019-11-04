@@ -1,3 +1,8 @@
+/* Andy Li
+ * 1048672
+ * ali13@uoguelph.ca
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,9 +21,11 @@ struct array_struct* get_title(char* path) {
 
     strcpy(dir, path);
     strcat(dir, "/title.basics.tsv");
-    printf("Opening: %s\n", dir);
 
     fp = fopen(dir, "r");
+    if (!fp) {
+        fileNotFound(dir);
+    }
     while (!feof(fp)) {
         fgets(line, 1024, fp);
         get_column(line, &column, 1);
@@ -35,7 +42,6 @@ struct array_struct* get_title(char* path) {
         }
     }
 
-    printf("number of titles: %d\n", movieCount);
     titles = malloc(sizeof(struct title_basics) * movieCount);
     fseek(fp, 0, SEEK_SET);
 
