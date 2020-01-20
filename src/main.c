@@ -79,14 +79,17 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+    printf("Building name trees...\n");
     names = get_name(argv[1]);
     build_nindex(names);
     build_pnindex(names);
 
+    printf("Building title trees...\n");
     titles = get_title(argv[1]);
     build_tindex(titles);
     build_ptindex(titles);
 
+    printf("Building principal trees...");
     principals = get_principals(argv[1]);
     build_tindex_tp(principals);
     build_nindex_tp(principals);

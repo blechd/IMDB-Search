@@ -1,29 +1,34 @@
 CC=gcc
-CFLAGS=-Wall -ansi -pedantic -I.
-OBJ=a3.o common.o binary.o name.o title.o principals.o
-HEADER_ALL=common.h binary.h name.h title.h principals.h
-HEADER=common.h binary.h
+CFLAGS=-Wall -ansi -pedantic -Iinclude
 
-a3: $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o $@
+BIN=bin/
+INC=include/
+SRC=src/
 
-a3.o: main.c $(HEADER_ALL)
-	$(CC) $(CFLAGS) -c main.c -o $@
+OBJ=$(BIN)main.o $(BIN)common.o $(BIN)binary.o $(BIN)name.o $(BIN)title.o $(BIN)principals.o
+HEADER_ALL=$(INC)common.h $(INC)binary.h $(INC)name.h $(INC)title.h $(INC)principals.h
+HEADER=$(INC)common.h $(INC)binary.h
 
-common.o: common.c common.h
+main: $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(BIN)$@
+
+$(BIN)main.o: $(SRC)main.c $(HEADER_ALL)
+	$(CC) $(CFLAGS) -c $(SRC)main.c -o $@
+
+$(BIN)common.o: $(SRC)common.c $(INC)common.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-binary.o: binary.c $(HEADER)
+$(BIN)binary.o: $(SRC)binary.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-name.o: name.c $(HEADER)
+$(BIN)name.o: $(SRC)name.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-title.o: title.c $(HEADER)
+$(BIN)title.o: $(SRC)title.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-principals.o: principals.c $(HEADER)
+$(BIN)principals.o: $(SRC)principals.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm a3 *.o
+	rm $(BIN)*
